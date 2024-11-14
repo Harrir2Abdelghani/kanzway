@@ -6,5 +6,9 @@
     {"id":5, "name": "Miling", "price": 530, "image":"/images/miling.JPG", "category": "Machining", "stock": 2},
     {"id":6, "name": "Hydraulic Filteration", "price": 230, "image":"/images/hydro.jpeg", "category": "Hydraulics", "stock": 7},
     {"id":7, "name": "Anchor", "price": 20, "image":"/images/anchor.JPG", "category": "Fasteners", "stock": 5},
-    {"id":8, "name": "Storage Unit", "price": 220, "image":"/images/storage.JPG", "category": "Furniture ", "stock": 11}
+    {"id":8, "name": "Storage Unit", "price": 220, "image":"/images/storage.JPG", "category": "Furniture ", "stock": 11},
+    {"id":9, "name": "Absarsive", "price": 200, "image":"/images/absarsive.JPG", "category": "Abrasives ", "stock": 8},
+    {"id":10, "name": "Screw", "price": 20, "image":"/images/screw.png", "category": "Fasteners ", "stock": 9},
+    {"id":11, "name": "Ac Unit", "price": 310, "image":"/images/ac.JPG", "category": "Heating ", "stock": 3},
+    {"id":12, "name": "Spray Paints", "price": 95, "image":"/images/spray.JPG", "category": "Paint ", "stock": 5}
 ]
