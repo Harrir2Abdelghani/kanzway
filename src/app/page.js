@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import productsData from "./data/products.json";
-import Modal from "./components/Modal";
-import { calculateDiscount } from "./utils/calculateDiscount";
 import { motion } from "framer-motion";
 import { FiShoppingCart } from "react-icons/fi";
 import "./globals.css";
+import productsData from "./data/products.json";
+import Modal from "./components/Modal";
+import { calculateDiscount } from "./utils/calculateDiscount";
 
 export default function Products() {
   const [products, setProducts] = useState(() => {
@@ -38,21 +38,19 @@ export default function Products() {
         item.id === productId ? { ...item, stock: item.stock - quantity } : item
       );
       setProducts(updatedProducts);
-
       setCart((prevCart) => [
         ...prevCart,
         { ...product, quantity, animationKey: Math.random() },
       ]);
-
       setAnimateCart(true);
-      setTimeout(() => setAnimateCart(false), 1000);
+      setTimeout(() => setAnimateCart(false), 2000);
     }
   };
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart.reduce((ac, item) => ac + item.price * item.quantity, 0);
   const { discount, finalTotal } = calculateDiscount(total);
 
   const filteredProducts = products.filter((product) => {
@@ -63,14 +61,16 @@ export default function Products() {
       (filter === "out-of-stock" && product.stock === 0);
     return matchesSearch && matchesFilter;
   });
+  const resetCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
 
   return (
     <div className="bg-teal-100 mx-auto p-8 rounded-lg shadow-xl max-w-7xl">
       <h1 className="text-3xl mt-4 font-extrabold mb-8 text-center text-black tracking-wide">
         KanzWay Products
       </h1>
-
-      {/* Search and Filter */}
       <div className="mb-6 flex justify-between items-center">
         <input
           type="text"
@@ -89,8 +89,6 @@ export default function Products() {
           <option value="out-of-stock">Out of Stock</option>
         </select>
       </div>
-
-      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.map((product) => (
           <motion.div
@@ -115,12 +113,11 @@ export default function Products() {
             </div>
             <p
               className={`text-sm font-medium mt-2 ${
-                product.stock > 0 ? "text-green-600" : "text-red-600"
+                product.stock > 0 ? "text-blue-900 text-lg" : "text-red-600"
               }`}
             >
               {product.stock > 0 ? `In Stock: ${product.stock}` : "Out of Stock"}
             </p>
-
             <div className="mt-4 flex items-center space-x-2 w-full">
               <input
                 type="number"
@@ -150,7 +147,6 @@ export default function Products() {
           </motion.div>
         ))}
       </div>
-
       <motion.div
         className="fixed top-1 right-10"
         animate={{ scale: animateCart ? 1.2 : 1 }}
@@ -162,7 +158,6 @@ export default function Products() {
         >
           <FiShoppingCart size={24} />
         </motion.button>
-
       </motion.div>
       {isModalOpen && (
         <Modal
@@ -170,6 +165,7 @@ export default function Products() {
           total={total}
           discount={discount}
           finalTotal={finalTotal}
+          resetCart={resetCart}
           onClose={closeModal}
         />
       )}
